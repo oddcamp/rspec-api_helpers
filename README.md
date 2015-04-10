@@ -1,13 +1,13 @@
 # Rspec::ApiHelpers
 
-TODO: Write a gem description
+Usefull Rspec helpers for APIs (currently only ActiveModel Serializers are supported)
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'rspec-api_helpers'
+gem 'rspec-api_helpers', github: 'kollegorna/rspec-api_helpers'
 ```
 
 And then execute:
@@ -19,8 +19,40 @@ Or install it yourself as:
     $ gem install rspec-api_helpers
 
 ## Usage
+This Gem expects you to have set your rspec to use Rake::Test helpers as described
+[here](https://gist.github.com/alex-zige/5795358) because it checks `last_response`
+attributes.
 
-TODO: Write usage instructions here
+### Examples
+
+```ruby
+it_returns_status(200)
+```
+It checks if the HTTP response status is 200.
+
+```ruby
+it_returns_attributes(resource: 'user', model: '@user', only: [
+  :email, :name
+])
+```
+It checks if the HTTP body contains an AMS json that has :email and :name attributes and
+compares them with '@user' variable's attributes.
+
+```ruby
+it_returns_more_attributes(
+  resource: 'user',
+  model: 'User.last!',
+  only: [:updated_at, :created_at],
+  modifier: 'iso8601'
+)
+```
+It checks if the HTTP body contains an AMS json that has :updated_at and :created_at
+attributes and compares them with '@user' variable's attributes after it applies modifier.
+
+```ruby
+it_returns_resources(root: 'users', number: 5)
+```
+It checks if the HTTP body contains an AMS json with an array of 'users'.
 
 ## Contributing
 
