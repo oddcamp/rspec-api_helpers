@@ -1,7 +1,7 @@
-require "rspec/api/version"
+require "rspec/api_helpers/version"
 
 module Rspec
-  module Api
+  module ApiHelpers
     module ExampleMethods
       def objectize_resources(json, root:)
         array = []

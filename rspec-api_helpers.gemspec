@@ -1,10 +1,10 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'rspec/api/version'
+require 'rspec/api_helpers/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "rspec-api"
+  spec.name          = "rspec-api_helpers"
   spec.version       = Rspec::Api::VERSION
   spec.authors       = ["Filippos Vasilakis"]
   spec.email         = ["vasilakisfil@gmail.com"]
