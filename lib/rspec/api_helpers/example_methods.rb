@@ -5,7 +5,7 @@ module Rspec
     module ExampleMethods
       def objectize_resources(json, root:)
         array = []
-        array_hash = HashWithIndifferentAccess.new(MultiJson.load(json))
+        array_hash = HashWithIndifferentAccess.new(JSON.load(json))
 
         if root
           array_hash = array_hash[root]
@@ -19,7 +19,7 @@ module Rspec
       end
 
       def objectize_resource(json, root:)
-        hash = HashWithIndifferentAccess.new(MultiJson.load(json))
+        hash = HashWithIndifferentAccess.new(JSON.load(json))
         if root
           obj = object_hash(hash[root])
         else
