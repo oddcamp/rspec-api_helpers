@@ -23,6 +23,19 @@ This Gem expects you to have set your rspec to use Rake::Test helpers as describ
 [here](https://gist.github.com/alex-zige/5795358) because it checks `last_response`
 attributes.
 
+In your `rails_helper.rb` add in the top:
+
+```ruby
+require 'rspec/api_helpers'
+```
+
+and then you only need to include the helpers in your rspec examples. You can include them on all api (:type => :api) helpers by adding the following line in your rspec config:
+
+```ruby
+  config.include Rspec::ApiHelpers, type: :api
+```
+
+
 ### Examples
 
 ```ruby
