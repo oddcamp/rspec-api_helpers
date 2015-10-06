@@ -6,11 +6,11 @@ require 'rspec/api_helpers/version'
 Gem::Specification.new do |spec|
   spec.name          = "rspec-api_helpers"
   spec.version       = Rspec::Api::VERSION
-  spec.authors       = ["Filippos Vasilakis"]
-  spec.email         = ["vasilakisfil@gmail.com"]
+  spec.authors       = ["Filippos Vasilakis", "Kollegorna"]
+  spec.email         = ["vasilakisfil@gmail.com", "admin@kollegorna.se"]
   spec.summary       = %q{Rspec matchers for APIs}
   spec.description   = %q{Rspec matchers for APIs}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/kollegorna/rspec-api_helpers"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
