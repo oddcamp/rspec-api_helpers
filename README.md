@@ -1,6 +1,6 @@
 # Rspec::ApiHelpers
 
-Usefull Rspec helpers for APIs (currently only ActiveModel Serializers are supported)
+Usefull Rspec helpers for APIs (currently JSONAPI and AM-JSON adapters are supported)
 
 ## Installation
 
@@ -36,36 +36,123 @@ and then you only need to include the helpers in your rspec examples. You can in
 ```
 
 
+**First you need to specify the adapter you want to use**
+
+```ruby
+RSpec.configure do |config|
+  config.include Rspec::ApiHelpers.with(adapter: :json_api)
+end
+```
+Other possible options for the adapter is `active_model`.
+
+You can also inject your custom made class by providing the class:
+```ruby
+RSpec.configure do |config|
+  config.include Rspec::ApiHelpers.with(adapter: Adapter::Hal)
+end
+```
+
+
 ### Examples
+The library heavily uses dynamic scopes through procs (an alternative to eval).
+
+
+#### General
 
 ```ruby
 it_returns_status(200)
 ```
-It checks if the HTTP response status is 200.
+It expects the HTTP response status to be 200.
 
 ```ruby
-it_returns_attributes(resource: 'user', model: '@user', only: [
+it_includes_in_headers('SESSION_TOKEN' => proc{@user.token})
+```
+It expects the HTTP response to include this header (and value).
+
+#### Resource
+
+```ruby
+it_returns_attributes(resource: 'user', model: '@user', attrs: [
   :email, :name
 ])
 ```
-It checks if the HTTP body contains an AMS json that has :email and :name attributes and
-compares them with '@user' variable's attributes.
+
+It expects the JSON resource to contain :email and :name attributes and
+be equal with with `@user` methods.
+
 
 ```ruby
-it_returns_more_attributes(
-  resource: 'user',
-  model: 'User.last!',
-  only: [:updated_at, :created_at],
-  modifier: 'iso8601'
+it_returns_attribute_values(
+  resource: 'user', model: proc{@user}, attrs: [
+    :id, :name, :email, :admin, :activated, :created_at, :updated_at
+  ], modifiers: {
+    [:created_at, :updated_at] => proc{|i| i.iso8601},
+    :id => proc{|i| i.to_s}
+  }
 )
 ```
-It checks if the HTTP body contains an AMS json that has :updated_at and :created_at
-attributes and compares them with '@user' variable's attributes after it applies modifier.
+It expects the JSON resource to contain specific attribute values as above but for
+`:updated_at`, `:created_at` and `id` it applies specific methods first, defined in the
+`modifier` hash (note that the methods are applied in the JSON resource, not in the variable)
 
 ```ruby
-it_returns_resources(root: 'users', number: 5)
+it_returns_no_attributes(
+  resource: 'user', attrs: [:foo1, :foo2, :foo3]
+)
 ```
-It checks if the HTTP body contains an AMS json with an array of 'users'.
+It expects the JSON resource to NOT contain any of those attributes.
+
+#### Collection
+```ruby
+it_returns_collection_size(resource: 'users', size: 6)
+```
+
+It expects the JSON collection to have `6` resources.
+
+```ruby
+it_returns_collection_attributes(
+  resource: 'users', attrs: [
+    :id, :name, :email, :admin, :activated, :created_at, :updated_at
+  ]
+)
+```
+
+It expects the JSON collection to have those attributes (no value checking).
+
+
+```ruby
+it_returns_no_collection_attributes(
+  resource: 'users', attrs: [
+    :foo
+  ]
+)
+```
+
+It expects the JSON collection NOT to have those attributes (no value checking).
+
+
+```ruby
+it_returns_collection_attribute_values(
+  resource: 'users', model: proc{User.first!}, attrs: [
+    :id, :name, :email, :admin, :activated, :created_at, :updated_at
+  ], modifiers: {
+    [:created_at, :updated_at] => proc{|i| i.iso8601},
+    :id => proc{|i| i.to_s}
+  }
+)
+```
+
+It expects the JSON collection to contain specific attribute values as above but for
+`:updated_at`, `:created_at` and `id` it applies specific methods first, defined in the
+`modifier` hash (note that the methods are applied in the JSON resource, not in the variable)
+
+
+## To Do
+* Enhance documentation
+* Better dir structure (break example group methods to modules)
+* Support for nested resources
+* Add tests
+* Support for HAL/Siren adapter
 
 ## Contributing
 
