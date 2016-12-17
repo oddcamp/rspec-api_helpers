@@ -29,14 +29,7 @@ In your `rails_helper.rb` add in the top:
 require 'rspec/api_helpers'
 ```
 
-and then you only need to include the helpers in your rspec examples. You can include them on all api (:type => :api) helpers by adding the following line in your rspec config:
-
-```ruby
-  config.include Rspec::ApiHelpers, type: :api
-```
-
-
-**First you need to specify the adapter you want to use**
+Then you need to specify the adapter you want.
 
 ```ruby
 RSpec.configure do |config|
@@ -51,7 +44,6 @@ RSpec.configure do |config|
   config.include Rspec::ApiHelpers.with(adapter: Adapter::Hal)
 end
 ```
-
 
 ### Examples
 The library heavily uses dynamic scopes through procs (an alternative to eval).
