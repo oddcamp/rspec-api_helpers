@@ -62,7 +62,7 @@ class Adapter::ActiveModel::Resource
     def modifiers_hash
       return {} if options[:modifiers].blank?
 
-      @modifiers_hash = {}
+      @modifiers_hash = HashWithIndifferentAccess.new({})
       options[:modifiers].each do |key, value|
         [key].flatten.each do |attr|
           if attrs?

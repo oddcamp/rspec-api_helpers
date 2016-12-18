@@ -59,7 +59,7 @@ module Adapter::ActiveModel::CommonHelpers
 
   def parse_model(model)
     return model unless model.is_a? Hash
-    
+
     return object_hash(model)
   end
 
