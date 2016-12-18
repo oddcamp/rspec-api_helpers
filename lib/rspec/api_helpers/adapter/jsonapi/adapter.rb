@@ -16,8 +16,6 @@ class Adapter
 
         jsonapi_collection = transform_collection(jsonapi_collection.dig('data') || {})
 
-        binding.pry
-
         return Adapter::ActiveModel::Collection.new(options, jsonapi_collection, _binding)
       end
 
