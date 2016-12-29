@@ -64,7 +64,7 @@ It expects the HTTP response to include this header (and value).
 #### Resource
 
 ```ruby
-it_returns_attributes(resource: 'user', model: '@user', attrs: [
+it_returns_attributes(resource: 'user', model: proc{@user}, attrs: [
   :email, :name
 ])
 ```
