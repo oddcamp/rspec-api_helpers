@@ -7,7 +7,7 @@ Usefull Rspec helpers for APIs (currently JSONAPI and AM-JSON adapters are suppo
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'rspec-api_helpers', github: 'kollegorna/rspec-api_helpers'
+gem 'rspec-api_helpers', '1.0.3'
 ```
 
 And then execute:
